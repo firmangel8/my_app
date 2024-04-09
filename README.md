@@ -3,7 +3,7 @@
 This project aims to provide a code base for students to practice layout, navigation, and CRUD basic with SQLite. Demonstrate package `sqflite` usage in flutter. It show basic function for CRUD. It also use flutter_slideable to make more clean list view.
 
 ## Getting Started
-- git clone git@github.com:firmangel8/my_app.git
+- git clone `git@github.com:firmangel8/my_app.git`
 - cd my_app
 - flutter run
 
