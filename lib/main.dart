@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
               selected: _selectedIndex == 2,
               onTap: () {
                 // Update the state of the app
-                _onItemTapped(3);
+                _onItemTapped(2);
                 // Then close the drawer
                 Navigator.pop(context);
               },
