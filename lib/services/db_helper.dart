@@ -36,7 +36,8 @@ class DBHelper {
 
   Future<List<Books>> getBooks() async {
     var dbClient = await db;
-    List<Map<String, dynamic>> maps = await dbClient.query('books');
+    List<Map<String, dynamic>> maps =
+        await dbClient.query('books', orderBy: 'id DESC');
     List<Books> books = [];
     if (maps.isNotEmpty) {
       for (int i = 0; i < maps.length; i++) {
