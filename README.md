@@ -11,7 +11,7 @@ This project aims to provide a code base for students to practice layout, naviga
 - Flutter 3.0+
 - Android SDK
 - Java JDK 21
-- IDE with friendly support flutter extensions
+- IDE with friendly support for Flutter extensions.
 
 ## Packages
 - Please refer to the documenation for [path_provider](https://pub.dev/packages/path_provider)
