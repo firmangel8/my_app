@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:my_app/dto/books.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io' as io;
@@ -66,8 +67,15 @@ class DBHelper {
     );
   }
 
-  Future close() async {
-    var dbClient = await db;
-    dbClient.close();
+  Future<void> close() async {
+    try {
+      // Access database client
+      var dbClient = await db;
+      _db = null;
+      await dbClient.close();
+    } catch (error) {
+      // Handle potential errors during closure
+      debugPrint('Error closing database: $error');
+    }
   }
 }

@@ -12,7 +12,7 @@ class BooksScreen extends StatefulWidget {
 
 class _BooksScreenState extends State<BooksScreen> {
   final GlobalKey<FormState> _formStateKey = GlobalKey<FormState>();
-  late Future<List<Books>> books;
+  Future<List<Books>>? books;
   late String _title;
   bool isUpdate = false;
   late int? bookIdForUpdate;
@@ -24,6 +24,12 @@ class _BooksScreenState extends State<BooksScreen> {
     super.initState();
     dbHelper = DBHelper();
     refreshBookLists();
+  }
+
+  @override
+  void dispose() {
+    dbHelper.close();
+    super.dispose();
   }
 
   void cancelTextEditing() {
@@ -39,11 +45,16 @@ class _BooksScreenState extends State<BooksScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  void refreshBookLists() {
-    setState(() {
-      books = dbHelper.getBooks();
-      isUpdate = false;
-    });
+  Future<void> refreshBookLists() async {
+    try {
+      await dbHelper.initDatabase();
+      setState(() {
+        books = dbHelper.getBooks();
+        isUpdate = false;
+      });
+    } catch (error) {
+      debugPrint('Error fetching books: $error');
+    }
   }
 
   void createOrUpdateBooks() {
