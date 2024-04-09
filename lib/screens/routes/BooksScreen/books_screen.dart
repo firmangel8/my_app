@@ -28,6 +28,7 @@ class _BooksScreenState extends State<BooksScreen> {
 
   @override
   void dispose() {
+    _bookTitleController.dispose();
     dbHelper.close();
     super.dispose();
   }
