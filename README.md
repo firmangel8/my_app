@@ -1,16 +1,19 @@
 # my_app
 
-A new Flutter project.
+This project aims to provide a code base for students to practice layout, navigation, and CRUD basic with SQLite. Demonstrate package `sqflite` usage in flutter. It show basic function for CRUD. It also use flutter_slideable to make more clean list view.
 
 ## Getting Started
+- git clone git@github.com:firmangel8/my_app.git
+- cd my_app
+- flutter run
 
-This project is a starting point for a Flutter application.
+## Requirements
+- Flutter 3.0+
+- Android SDK
+- Java JDK 21
+- IDE with friendly support flutter extensions
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Packages
+- Please refer to the documenation for [path_provider](https://pub.dev/packages/path_provider)
+- Please refer to the documentation for [sqflite](https://pub.dev/packages/sqflite)
+- Please refer to the documentation for [flutter_slideable](https://pub.dev/packages/flutter_slidable)
