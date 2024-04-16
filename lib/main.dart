@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app/screens/home_screen.dart';
 import 'package:my_app/screens/news_screen.dart';
 import 'package:my_app/screens/routes/BooksScreen/books_screen.dart';
+import 'package:my_app/screens/routes/DatasScreen/datas_screen.dart';
+import 'package:my_app/screens/routes/FormScreen/form_screen.dart';
 import 'package:my_app/screens/routes/SecondScreen/custom_screen.dart';
 import 'package:my_app/screens/routes/SecondScreen/second_screen.dart';
 import 'package:my_app/screens/setting_screen.dart';
@@ -21,12 +23,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Home Screen'),
+      // home: const MyHomePage(title: 'Home Screen'),
+      initialRoute: '/',
       routes: {
+        '/': (context) => const MyHomePage(title: 'Home Screen'),
         '/second-screen': (context) => const SecondScreen(),
         '/custom-screen': (context) => const CustomScreen(),
         '/news-screen': (context) => const NewsScreen(),
-        '/books-screen': (context) => const BooksScreen()
+        '/books-screen': (context) => const BooksScreen(),
+        '/form-screen': (context) => const FormScreen(),
+        '/datas-screen': (context) => const DatasScreen(),
       },
     );
   }
@@ -48,14 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
     const HomeScreen(),
     const SettingScreen(),
     const ProfileScreen(),
-    const BooksScreen(),
   ];
 
   final List<String> _appBarTitles = const [
     'Home',
     'Settings',
     'Profile',
-    'Book Screen',
   ]; // List of titles corresponding to each screen
 
   void _onItemTapped(int index) {
@@ -117,22 +121,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context);
               },
             ),
-            ListTile(
-              title: const Text('Books Screen'),
-              selected: _selectedIndex == 3,
-              onTap: () {
-                // Update the state of the app
-                _onItemTapped(3);
-                // // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
+            listTilePush(context, 'News Screen', '/news-screen'),
+            listTilePush(context, 'Datas Screen', '/datas-screen'),
           ],
         ),
       ),
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -146,15 +142,23 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Book Screen',
-          ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
       ),
+    );
+  }
+
+  ListTile listTilePush(
+      BuildContext context, String screenName, String routesname) {
+    return ListTile(
+      title: Text(screenName),
+      selected: _selectedIndex == 2,
+      onTap: () {
+        Navigator.pop(context);
+        Navigator.pushNamed(context, routesname);
+      },
     );
   }
 }

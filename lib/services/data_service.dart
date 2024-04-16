@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:my_app/dto/datas.dart';
 import 'dart:convert';
 
 import 'package:my_app/dto/news.dart';
@@ -13,6 +14,19 @@ class DataService {
     } else {
       // Handle error
       throw Exception('Failed to load news');
+    }
+  }
+
+  static Future<List<Datas>> fetchDatas() async {
+    final response = await http.get(Uri.parse(Endpoints.datas));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      return (data['datas'] as List<dynamic>)
+          .map((item) => Datas.fromJson(item as Map<String, dynamic>))
+          .toList();
+    } else {
+      // Handle error
+      throw Exception('Failed to load data');
     }
   }
 
