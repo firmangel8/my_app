@@ -1,0 +1,64 @@
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  _requestLocalNotifPermision();
+
+  const AndroidInitializationSettings androidInitializationSettings =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  const InitializationSettings initializationSettings =
+      InitializationSettings(android: androidInitializationSettings);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  // Request permission to receive notifications (Android only)
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    NotificationSettings? settings = await messaging.requestPermission();
+    debugPrint("${settings.authorizationStatus}");
+  }
+
+  // Listen to incoming messages in the foreground
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    debugPrint(
+        "Received message in foreground: ${message.notification?.title}");
+    // Use this data to display a notification or take other actions
+    _showNotification(message);
+    debugPrint("show notification here");
+  });
+
+  // Listen to incoming messages when the app is in background or terminated
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    debugPrint(
+        "Received message when app was closed: ${message.notification?.title}");
+    // Handle notification tap event (optional)
+  });
+
+  // Get the registration token for this device
+  String? token = await messaging.getToken();
+  debugPrint("Registration token: $token");
+  runApp(const MyApp());
+}
+
+Future<void> _requestLocalNotifPermision() async {
+  final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+  await androidImplementation?.requestNotificationsPermission();
+}
+
+void _showNotification(RemoteMessage message) {
+  // Customize notification based on your needs
+  RemoteNotification? notification = message.notification;
+  const AndroidNotificationDetails androidNotificationDetails =
+      AndroidNotificationDetails('my_app_id', 'my_app_name',
+          channelDescription: 'Only for demonstrate notification',
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker');
+  const NotificationDetails notificationDetails =
+      NotificationDetails(android: androidNotificationDetails);
+  if (notification != null) {
+    flutterLocalNotificationsPlugin.show(notification.hashCode,
+        notification.title, notification.body, notificationDetails);
+  }
+}

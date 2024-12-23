@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/dto/news.dart';
-import 'package:my_app/services/data_service.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({Key? key}) : super(key: key);
@@ -16,7 +15,6 @@ class _NewsScreenState extends State<NewsScreen> {
   @override
   void initState() {
     super.initState();
-    _news = DataService.fetchNews();
   }
 
   @override

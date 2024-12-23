@@ -53,15 +53,18 @@ class _DatasScreenState extends State<DatasScreen> {
                   title: item.imageUrl != null
                       ? Row(
                           children: [
-                            Image.network(
-                              fit: BoxFit.fitWidth,
-                              width: 350,
-                              Uri.parse(
-                                      '${Endpoints.baseURLLive}/public/${item.imageUrl!}')
-                                  .toString(),
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons
-                                      .error), // Display error icon if image fails to load
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(
+                                fit: BoxFit.fitWidth,
+                                width: 350,
+                                Uri.parse(
+                                        '${Endpoints.baseURLLive}/public/${item.imageUrl!}')
+                                    .toString(),
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const Icon(Icons
+                                        .error), // Display error icon if image fails to load
+                              ),
                             ),
                           ],
                         )
